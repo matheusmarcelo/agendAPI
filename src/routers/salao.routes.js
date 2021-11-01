@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Salao = require('../models/salao');
 const Servico = require('../models/servico');
+const Horario = require('../models/horario');
 const turf = require('@turf/turf');
+const util = require('../../util');
 
 router.post('/', async (req, res) => {
     try {
@@ -55,7 +57,14 @@ router.get('/:id', async (req, res) => {
             turf.point([-23.4549341, -46.6062336]),
         );
 
-        res.json({ error: false, salao, distance });
+        // ESTÁ ABERTO
+        const horarios = await Horario.find({
+            salaoId: req.params.id,
+        }).select('dias inicio fim');
+
+        const isOpened = util.isOpened(horarios);
+
+        res.json({ error: false, salao: {...salao._doc, distance, isOpened} });
     } catch(err) {
         res.json({ error: true, message: err.message });
     }
