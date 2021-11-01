@@ -15,7 +15,7 @@ app.use(busboyBodyParser());
 app.use(cors());
 
 // VARIABLES
-app.set('port', 8000);
+app.set('port', process.env.PORT || 8000);
 
 // ROTAS
 app.use('/salao', require('./src/routers/salao.routes'));
