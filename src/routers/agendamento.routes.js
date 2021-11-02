@@ -217,7 +217,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                 if(totalEspecialistas > 0) {
                     colaboradores.push(Object.keys(todosHoraiosDias));
                     agenda.push({
-                        [lastDay.format('DD/MM/YYYY')]: todosHoraiosDias,
+                        [lastDay.format('YYYY-MM-DD')]: todosHoraiosDias,
                     });
                 }
             }
